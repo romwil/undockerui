@@ -1,6 +1,10 @@
-# Installing UnDocker on Unraid
+# Installing UndockerUI on Unraid
 
-UnDocker is a **static SPA** (`plugin/dist/`) plus **PHP** entrypoints served by Unraid’s **emhttp** web server. There is no separate Docker container for the UI itself.
+**UndockerUI** is an **improved Docker UI for Unraid** compared to the built-in Docker page. Technically it is a **static SPA** (`plugin/dist/`) plus **PHP** entrypoints served by Unraid’s **emhttp** web server. There is no separate Docker container for the UI itself.
+
+## Upgrade from older installs
+
+If you previously copied **`UnDocker.page`**, delete it from **`/usr/local/emhttp/plugins/undockerui/`** and install **`UndockerUI.page`** instead so the menu shows a single **UndockerUI** entry (same plugin path; the filename controls the `/UndockerUI` route).
 
 ## 1. Build on a machine with Node.js
 
@@ -22,7 +26,7 @@ Copy the **`plugin/`** directory so the server has:
 
 ```text
 /usr/local/emhttp/plugins/undockerui/
-  UnDocker.page          # Menu registration (Tasks submenu)
+  UndockerUI.page        # Menu registration (Tasks submenu)
   undockerui.php         # Wrapper + iframe
   compose_api.php        # Source copy (optional on server; dist/ has the served one)
   dist/
@@ -39,7 +43,7 @@ Files should be readable by **nobody** / **emhttp** like other Dynamix plugins (
 
 ## 3. Menu entry
 
-`UnDocker.page` registers the plugin when **Docker is enabled**:
+`UndockerUI.page` registers the plugin when **Docker is enabled**:
 
 ```text
 Cond="exec(\"grep -o '^DOCKER_ENABLED=.yes' /boot/config/docker.cfg 2>/dev/null\")"
@@ -55,7 +59,7 @@ After install, **hard-refresh** the browser (Ctrl+Shift+R) or restart **emhttp**
 ## 4. Verify
 
 1. Log into the Unraid web UI.
-2. Open **UnDocker** from the menu (under **Tasks** by default — see `Menu="Tasks:61"` in `UnDocker.page`).
+2. Open **UndockerUI** from the menu (under **Tasks** by default — see `Menu="Tasks:61"` in `UndockerUI.page`). It appears alongside Unraid’s stock Docker tools and uses the same Docker engine.
 3. You should see the container table. Opening **Compose workspace** and listing a directory should return JSON (not HTML 404).
 
 ## Troubleshooting

@@ -3,7 +3,7 @@
 
 SOURCE_DIR="/mnt/user/appdata/undockerui"
 PLUGIN_NAME="undockerui"
-PAGE_BASE="UnDocker"
+PAGE_BASE="UndockerUI"
 RAM_PATH="/usr/local/emhttp/plugins/$PLUGIN_NAME"
 
 echo "Purging old links and ghosts..."
@@ -27,4 +27,4 @@ ln -sf "$SOURCE_DIR/plugin/dist" "$RAM_PATH/dist"
 echo "Nuking the emhttp template cache..."
 rm -f /var/local/emhttp/*.php
 
-echo "Done. Hard-refresh the WebGUI — open 'UnDocker' on the top bar (after Docker, when Docker is enabled). URL is /UnDocker."
+echo "Done. Hard-refresh the WebGUI — open 'UndockerUI' on the top bar (after Docker, when Docker is enabled). URL is /UndockerUI."

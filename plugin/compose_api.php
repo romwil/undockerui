@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 /**
- * UnDocker — read/write compose files and run `docker compose up -d` on the Unraid host.
+ * UndockerUI — read/write compose files and run `docker compose up -d` on the Unraid host.
  * Restricted to paths under /mnt/user, /mnt/cache, /mnt/disk*, and /boot/config.
  * Uses realpath() so symlink tricks cannot bypass the prefix rules.
  */

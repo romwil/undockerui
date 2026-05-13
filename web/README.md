@@ -1,6 +1,6 @@
-# UnDocker — web UI (Vite + React)
+# UndockerUI — web UI (Vite + React)
 
-This directory is the **UnDocker front-end**: a React 19 SPA that talks to Unraid’s GraphQL API and to `compose_api.php` on the same origin.
+This directory is the **UndockerUI** front end: a React 19 SPA that improves on Unraid’s built-in Docker UI and talks to Unraid’s GraphQL API and to `compose_api.php` on the same origin.
 
 ## Commands
 

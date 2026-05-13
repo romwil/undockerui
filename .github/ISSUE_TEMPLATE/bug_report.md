@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Something is broken in UnDocker
+about: Something is broken in UndockerUI
 title: ''
 labels: bug
 ---

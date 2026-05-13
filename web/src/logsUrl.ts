@@ -1,4 +1,4 @@
-/** Opened from the main UnDocker SPA; same path + query selects the logs-only view. */
+/** Opened from the main UndockerUI SPA; same path + query selects the logs-only view. */
 export function isLogsWindowMode(): boolean {
   if (typeof window === 'undefined') return false
   return new URLSearchParams(window.location.search).get('view') === 'logs'

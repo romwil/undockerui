@@ -1,7 +1,7 @@
 Menu="Tasks:61"
 Type="xmenu"
-Title="UnDocker"
-Name="UnDocker"
+Title="UndockerUI"
+Name="UndockerUI"
 Icon="docker"
 Cond="exec(\"grep -o '^DOCKER_ENABLED=.yes' /boot/config/docker.cfg 2>/dev/null\")"
 ---

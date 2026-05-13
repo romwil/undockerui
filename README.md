@@ -1,6 +1,6 @@
-# UnDocker
+# UndockerUI
 
-A **Docker-focused web UI for [Unraid](https://unraid.net/)** that runs as an emhttp plugin page. It talks to Unraid’s **GraphQL API** for container lifecycle, logs, and autostart, and ships a small **PHP compose helper** for editing `docker-compose.yml` files on the server.
+**UndockerUI** is an **improved Docker experience for [Unraid](https://unraid.net/)**—a plugin page that replaces the day-to-day limitations of Unraid’s **built-in Docker UI** with a faster, information-rich grid, clearer details, compose editing from the browser, and dedicated logs/update flows. It runs as an **emhttp** plugin: the SPA talks to Unraid’s **GraphQL API** for container lifecycle, logs, and autostart, and a small **PHP compose helper** edits `docker-compose.yml` on the server and runs `docker compose up -d` where needed.
 
 **Repository:** [github.com/romwil/undockerui](https://github.com/romwil/undockerui)
 
@@ -12,7 +12,7 @@ A **Docker-focused web UI for [Unraid](https://unraid.net/)** that runs as an em
 |------|----------------|
 | **Container grid** | Name, status, image, IP, ports, uptime, created, autostart, update flags, actions |
 | **Template icons** | Unraid / CA icons from `iconUrl` or Docker labels (`net.unraid.docker.icon`), with safe URL handling |
-| **Row menu** | Open Web UI (`[IP]` → container IP), **Edit** (stock Unraid template editor), **Shell** (`openTerminal`), **Details**, **Compose workspace** |
+| **Row menu** | Open Web UI (`[IP]` → container IP), **Edit** (stock Unraid template editor), **Shell** (`openTerminal`), **Details**, **Compose workspace** — same underlying Docker engine as the stock page, clearer layout in UndockerUI |
 | **Details pane** | Volume mappings, networks / LAN / ports, Compose labels, project / support / registry links |
 | **Compose workspace** | Load YAML, browse allowed paths, **Save & deploy** / **Deploy** via `docker compose up -d` (server-side PHP + CSRF) |
 | **Updates** | Opens a dedicated window with GraphQL `updateContainer` / `updateAllContainers` plus live polling |
@@ -46,7 +46,7 @@ A **Docker-focused web UI for [Unraid](https://unraid.net/)** that runs as an em
 
    ```text
    /usr/local/emhttp/plugins/undockerui/
-     UnDocker.page
+     UndockerUI.page
      undockerui.php
      compose_api.php
      dist/
@@ -56,7 +56,7 @@ A **Docker-focused web UI for [Unraid](https://unraid.net/)** that runs as an em
        …
    ```
 
-3. Reload the Unraid web UI. Under **Main** (or your menu layout), open **UnDocker** when Docker is enabled.
+3. Reload the Unraid web UI. Under **Main** (or your menu layout), open **UndockerUI** when Docker is enabled (same Docker engine as Unraid’s stock Docker page—UndockerUI is an alternate UI).
 
 Full paths, permissions, and troubleshooting: **[docs/INSTALLATION.md](docs/INSTALLATION.md)** — or the **[wiki Installation chapter](https://github.com/romwil/undockerui/wiki/Installation)** for the expanded guide.
 
@@ -99,4 +99,4 @@ MIT — see [LICENSE](LICENSE).
 
 ## Disclaimer
 
-This plugin can **start, stop, remove, and update containers** and **run `docker compose`** on your NAS. Use it only on systems you administer, keep Unraid updated, and protect the web GUI (strong passwords, VPN, or restricted access).
+This plugin can **start, stop, remove, and update containers** and **run `docker compose`** on your NAS. It is an **alternate UI** to Unraid’s built-in Docker page (same engine). Use it only on systems you administer, keep Unraid updated, and protect the web GUI (strong passwords, VPN, or restricted access).

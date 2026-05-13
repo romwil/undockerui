@@ -14,7 +14,7 @@ export default function LogsWindowApp() {
   const [tail, setTail] = useState(init.tail)
 
   useEffect(() => {
-    document.title = `Logs — ${name} · UnDocker`
+    document.title = `Logs — ${name} · UndockerUI`
   }, [name])
 
   useEffect(() => {
@@ -42,7 +42,7 @@ export default function LogsWindowApp() {
     return (
       <div className="flex min-h-screen flex-col bg-zinc-950 p-6 text-sm text-red-200">
         Missing <code className="text-zinc-400">id</code> in the URL. Close this window and open logs
-        from UnDocker again.
+        from UndockerUI again.
       </div>
     )
   }
@@ -51,7 +51,7 @@ export default function LogsWindowApp() {
     <div className="flex h-screen min-h-0 flex-col bg-zinc-950 text-zinc-200">
       <header className="flex shrink-0 flex-wrap items-center gap-2 border-b border-zinc-800 px-4 py-3">
         <h1 className="text-sm font-semibold text-zinc-100">Logs — {name}</h1>
-        <span className="text-xs text-zinc-500">UnDocker</span>
+        <span className="text-xs text-zinc-500">UndockerUI</span>
         <label className="ml-auto flex items-center gap-2 text-xs text-zinc-400">
           Tail
           <select

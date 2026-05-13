@@ -2,7 +2,7 @@
   "name": "undockerui",
   "private": true,
   "version": "1.0.0",
-  "description": "UnDocker — a modern Docker containers UI for Unraid (plugin + React SPA).",
+  "description": "UndockerUI — improved Docker management for Unraid vs the built-in Docker UI (plugin + React SPA).",
   "license": "MIT",
   "repository": {
     "type": "git",

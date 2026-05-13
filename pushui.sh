@@ -13,10 +13,10 @@ rm -rf "$PLUGIN_DIR"
 echo "Injecting symlinks..."
 mkdir -p "$PLUGIN_DIR"
 
-# Top-bar label uses Name, else the .page basename. Route URL is /basename (e.g. /UnDocker).
+# Top-bar label uses Name, else the .page basename. Route URL is /basename (e.g. /UndockerUI).
 # Copy .page with CRLF stripped — Dynamix splits header/body on LF-only "\n---\n".
-sed 's/\r$//' "$SOURCE_DIR/plugin/UnDocker.page" > "$PLUGIN_DIR/UnDocker.page"
-chmod 644 "$PLUGIN_DIR/UnDocker.page"
+sed 's/\r$//' "$SOURCE_DIR/plugin/UndockerUI.page" > "$PLUGIN_DIR/UndockerUI.page"
+chmod 644 "$PLUGIN_DIR/UndockerUI.page"
 
 # Link the internal assets
 ln -sf "$SOURCE_DIR/plugin/undockerui.php" "$PLUGIN_DIR/undockerui.php"
@@ -25,4 +25,4 @@ ln -sf "$SOURCE_DIR/plugin/dist" "$PLUGIN_DIR/dist"
 echo "Nuking the emhttp template cache..."
 rm -f /var/local/emhttp/*.php
 
-echo "Done. Hard-refresh the WebGUI — open 'UnDocker' on the top bar (after Docker, when Docker is enabled). URL is /UnDocker."
+echo "Done. Hard-refresh the WebGUI — open 'UndockerUI' on the top bar (after Docker, when Docker is enabled). URL is /UndockerUI."

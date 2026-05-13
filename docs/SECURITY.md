@@ -1,6 +1,6 @@
 # Security
 
-UnDocker runs **inside the authenticated Unraid web UI** and inherits the same session and CSRF model as other Dynamix pages. Treat the combination of **this UI + Unraid GraphQL + compose API** as **full administrative access** to Docker and selected filesystem paths on the NAS.
+UndockerUI runs **inside the authenticated Unraid web UI** and inherits the same session and CSRF model as other Dynamix pages. Treat the combination of **this UI + Unraid GraphQL + compose API** as **full administrative access** to Docker and selected filesystem paths on the NAS.
 
 ## Threat model
 

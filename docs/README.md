@@ -1,4 +1,6 @@
-# UnDocker documentation
+# UndockerUI documentation
+
+Handbook for **UndockerUI**—an improved Docker UI for Unraid compared to the built-in Docker page. Deep guides live in the wiki; this folder holds shorter technical references.
 
 | Document | Description |
 |----------|-------------|

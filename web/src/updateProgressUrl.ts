@@ -1,4 +1,4 @@
-/** Same-origin BroadcastChannel so the main UnDocker table can disable updates while a job runs. */
+/** Same-origin BroadcastChannel so the main UndockerUI table can disable updates while a job runs. */
 export const UPDATE_PROGRESS_BROADCAST = 'undocker-update-progress-v1'
 
 const VIEW = 'update'

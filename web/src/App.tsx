@@ -628,7 +628,7 @@ export default function App() {
   return (
     <div className="flex h-full min-h-0 flex-col bg-zinc-950 text-zinc-200">
       <header className="flex shrink-0 flex-wrap items-center gap-2 border-b border-zinc-800 px-4 py-2">
-        <h1 className="text-sm font-semibold tracking-tight text-zinc-100">UnDocker</h1>
+        <h1 className="text-sm font-semibold tracking-tight text-zinc-100">UndockerUI</h1>
         <span className="text-xs text-zinc-500">
           {list.length} container{list.length === 1 ? '' : 's'}
           {updateableCount > 0 ? (

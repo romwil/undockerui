@@ -40,7 +40,7 @@ export default function UpdateProgressApp() {
         : 'Invalid update URL'
 
   useEffect(() => {
-    document.title = params ? `${title} · UnDocker` : 'Update · UnDocker'
+    document.title = params ? `${title} · UndockerUI` : 'Update · UndockerUI'
   }, [params, title])
 
   useEffect(() => {
@@ -210,7 +210,7 @@ export default function UpdateProgressApp() {
           /* ignore */
         }
         if (alive) {
-          push('Session complete — refresh the main UnDocker tab if it is still open.')
+          push('Session complete — refresh the main UndockerUI tab if it is still open.')
           setFinished(true)
           notifyOpener()
         }

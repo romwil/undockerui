@@ -9,7 +9,7 @@ undockerui/
     src/
     vite.config.ts
   plugin/
-    UnDocker.page        # emhttp menu
+    UndockerUI.page      # emhttp menu
     undockerui.php       # iframe host page
     compose_api.php      # Copied into dist/ on each build
     dist/                # Build output (gitignored — run npm run build)

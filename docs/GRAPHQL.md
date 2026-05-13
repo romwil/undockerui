@@ -1,6 +1,6 @@
 # GraphQL usage
 
-UnDocker uses Unraid’s **GraphQL HTTP endpoint** (typically **`POST /graphql`** on the web GUI origin, or port **8081** in some setups).
+UndockerUI uses Unraid’s **GraphQL HTTP endpoint** (typically **`POST /graphql`** on the web GUI origin, or port **8081** in some setups).
 
 ## Operations (SPA)
 

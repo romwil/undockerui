@@ -1,10 +1,10 @@
-# Contributing to UnDocker
+# Contributing to UndockerUI
 
-Thanks for helping improve UnDocker.
+Thanks for helping improve UndockerUI.
 
 ## Scope
 
-Keep changes **focused** on the Unraid Docker / Compose experience. Avoid unrelated refactors, new dependencies without a clear need, or copying large third-party trees into the repo.
+Keep changes **focused** on improving the Unraid **Docker** / **Compose** experience over the stock Docker UI. Avoid unrelated refactors, new dependencies without a clear need, or copying large third-party trees into the repo.
 
 ## Workflow
 

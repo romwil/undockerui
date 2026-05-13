@@ -27,7 +27,7 @@ const SAFE_SHELLS = new Set(['bash', 'sh', 'ash', '/bin/bash', '/bin/sh', '/bin/
 export function openUnraidContainerTerminal(containerName: string, shell?: string | null): void {
   const name = containerName.replace(/^\//, '')
   if (/[;&|`$()<>\n\r\\]/.test(name)) {
-    window.alert('UnDocker: unsupported characters in container name for console.')
+    window.alert('UndockerUI: unsupported characters in container name for console.')
     return
   }
   const shRaw = shell?.trim() || 'bash'
@@ -37,7 +37,7 @@ export function openUnraidContainerTerminal(containerName: string, shell?: strin
     topWin.openTerminal('docker', name, sh)
   } else {
     window.alert(
-      'Container console is only available when UnDocker runs inside the Unraid web UI (openTerminal).',
+      'Container console is only available when UndockerUI runs inside the Unraid web UI (openTerminal).',
     )
   }
 }
