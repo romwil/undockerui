@@ -8,11 +8,16 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
-  const rootEnv = loadEnv(mode, path.resolve(__dirname, '..'), '')
+  // Only UNRAID_* keys from repo-root .env — avoids loadEnv('', …) merging all of process.env.
+  const rootEnv = loadEnv(mode, path.resolve(__dirname, '..'), 'UNRAID_')
+
   const graphqlUrl =
     rootEnv.UNRAID_GRAPHQL?.trim() ||
     `http://${rootEnv.UNRAID_IP || '127.0.0.1'}:${rootEnv.UNRAID_GRAPHQL_PORT || '8081'}/graphql`
-  const apiKey = rootEnv.UNRAID_KEY || ''
+
+  /** Unraid Connect / API key auth: sent as x-api-key on proxied /graphql in dev only. */
+  const apiKey = (rootEnv.UNRAID_API_KEY || rootEnv.UNRAID_KEY || '').trim()
+
   const webguiUrl =
     rootEnv.UNRAID_WEBGUI?.trim() ||
     (rootEnv.UNRAID_IP ? `http://${rootEnv.UNRAID_IP}` : 'http://127.0.0.1')

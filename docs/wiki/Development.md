@@ -33,6 +33,10 @@ From repo root:
 | Unraid URL helpers | `unraidLinks.ts`, `unraidFileBrowser.ts` |
 | Logs / update child apps | `LogsWindowApp.tsx`, `UpdateProgressApp.tsx`, `logsUrl.ts`, `updateProgressUrl.ts` |
 
+## Environment
+
+See **[Configuration](./Configuration.md)** for the full `.env` reference (`UNRAID_GRAPHQL`, `UNRAID_WEBGUI`, `UNRAID_API_KEY`, `VITE_GRAPHQL_URL`, etc.).
+
 ## Tests / CI
 
 GitHub Actions runs **`npm ci`**, **`npm run lint`**, and **`npm run build`** in `web/` on pushes and PRs to `main` / `master`.

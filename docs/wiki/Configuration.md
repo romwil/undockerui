@@ -26,19 +26,22 @@ This bakes the override into the static JS. Most Unraid installs do **not** need
 
 Environment variables are read from a **`.env` file in the repository root** (parent of `web/`), because `web/vite.config.ts` sets `envDir: '..'`.
 
-Copy `.env.example` to `.env` and adjust:
+Copy `.env.example` to `.env` in the **repo root**. Vite loads **`UNRAID_*`** keys in `vite.config.ts` only (not bundled into JS). **`VITE_GRAPHQL_URL`** is optional and only affects **production** builds.
 
 | Variable | Role |
 |----------|------|
-| `UNRAID_IP` | Default host for constructed GraphQL / web URLs. |
-| `UNRAID_GRAPHQL` | Full GraphQL URL for the dev proxy target. |
-| `UNRAID_GRAPHQL_PORT` | Used when `UNRAID_GRAPHQL` is unset (default `8081`). |
-| `UNRAID_WEBGUI` | Origin used as the **target** for proxied `compose_api.php` requests. |
-| `UNRAID_KEY` | Optional: dev proxy adds `x-api-key` for Unraid setups that require it. |
+| `UNRAID_IP` | Fallback host when full URLs are omitted. |
+| `UNRAID_GRAPHQL` | Full GraphQL URL; overrides IP + port when set. |
+| `UNRAID_GRAPHQL_PORT` | Used when `UNRAID_GRAPHQL` is empty (default `8081`). |
+| `UNRAID_WEBGUI` | Web GUI origin for `compose_api.php` proxy (include port, e.g. `:80`). |
+| `UNRAID_API_KEY` | Optional; dev proxy sends `x-api-key` on `/graphql`. |
+| `UNRAID_KEY` | Legacy alias for `UNRAID_API_KEY`. |
+
+In **dev**, the SPA always calls **`/graphql`** on the Vite host so those `UNRAID_*` values apply to the **proxy** only.
 
 Dev server proxies (see `vite.config.ts`):
 
-- `/graphql` → your Unraid GraphQL origin.
+- `/graphql` → Unraid GraphQL (optional `x-api-key`).
 - `/plugins/undockerui/dist/compose_api.php` (and alternate path) → `UNRAID_WEBGUI` origin.
 
 Run:

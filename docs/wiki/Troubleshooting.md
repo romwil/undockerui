@@ -29,6 +29,17 @@
 | HTTP 401/403 | Session expired or insufficient user permissions for Docker. |
 | Field errors after Unraid upgrade | GraphQL schema changed; update the SPA queries in `web/src/lib/docker.ts` to match your version. |
 | Connection refused (dev) | `UNRAID_IP` / `UNRAID_GRAPHQL` wrong; firewall blocking port **8081** (or your custom GraphQL port). |
+| 401/403 only in **local** `npm run dev` | If Unraid requires an API key, set **`UNRAID_API_KEY`** (or legacy **`UNRAID_KEY`**) in repo-root `.env`; the dev proxy adds `x-api-key` to `/graphql`. |
+
+---
+
+## Local `npm run dev` and `.env`
+
+| Symptom | Likely cause |
+|---------|----------------|
+| Proxies ignore your settings | `.env` must sit in the **repository root** (next to `package.json`), not inside `web/`. Restart `npm run dev` after edits. |
+| `VITE_GRAPHQL_URL` has no effect in dev | **Expected:** in development the SPA always calls **`/graphql`** on the Vite server; GraphQL host/port/API key for the proxy come only from **`UNRAID_*`** in `vite.config.ts`. |
+| Compose proxy 404 | **`UNRAID_WEBGUI`** must be the full web GUI origin (include port). The old typo **`UNRAID_WEBUI`** is not read. |
 
 ---
 
