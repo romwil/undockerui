@@ -58,7 +58,7 @@ A **Docker-focused web UI for [Unraid](https://unraid.net/)** that runs as an em
 
 3. Reload the Unraid web UI. Under **Main** (or your menu layout), open **UnDocker** when Docker is enabled.
 
-Full paths, permissions, and troubleshooting: **[docs/INSTALLATION.md](docs/INSTALLATION.md)**.
+Full paths, permissions, and troubleshooting: **[docs/INSTALLATION.md](docs/INSTALLATION.md)** — or the **[wiki Installation chapter](docs/wiki/Installation.md)** for the expanded guide.
 
 ---
 
@@ -81,7 +81,8 @@ Details: **[docs/DEVELOPMENT.md](docs/DEVELOPMENT.md)**.
 
 | Doc | Purpose |
 |-----|---------|
-| [docs/INSTALLATION.md](docs/INSTALLATION.md) | Where files go on Unraid, build output, menu entry |
+| **[docs/wiki](docs/wiki/README.md)** | **Full wiki** — overview, requirements, install, first run, UI, compose, logs/updates, architecture, configuration, security, troubleshooting, development, FAQ |
+| [docs/INSTALLATION.md](docs/INSTALLATION.md) | Short install reference (see wiki for depth) |
 | [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) | Vite, env vars, GraphQL proxy, compose API |
 | [docs/SECURITY.md](docs/SECURITY.md) | Threat model, CSRF, path rules, hardening notes |
 | [docs/GRAPHQL.md](docs/GRAPHQL.md) | Queries/mutations used and schema snapshot |
