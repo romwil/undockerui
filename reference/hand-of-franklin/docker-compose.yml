@@ -1,0 +1,26 @@
+services:
+  vault1848:
+    build:
+      context: .
+      dockerfile: Dockerfile.dockerfile
+    container_name: Vault1848
+    ports:
+      - "8090:8090"
+    env_file:
+      - .env
+    environment:
+      - UNRAID_IP=${UNRAID_IP:-127.0.0.1}
+      - UNRAID_GRAPHQL=${UNRAID_GRAPHQL:-}
+      - UNRAID_KEY=${UNRAID_KEY}
+      # Base URL for Overseer “U” Docker link (no trailing slash). Use https://tower.local if you use TLS.
+      - UNRAID_WEBUI=${UNRAID_WEBUI:-}
+      # GNR (Galaxy News Radio) stream URL (optional). Legacy: WSTE_RADIO_URL still read by the app.
+      - GNR_RADIO_URL=${GNR_RADIO_URL:-}
+      - WSTE_RADIO_URL=${WSTE_RADIO_URL:-}
+      - VAULT_DATA_DIR=/app/data
+    volumes:
+      # Persistent state and config. On Unraid use: /mnt/user/appdata/hand-of-franklin/data:/app/data
+      - ./data:/app/data
+      # Optional: enables LOG when Unraid GraphQL has no docker.logs (older API). Read-only.
+      # - /var/run/docker.sock:/var/run/docker.sock:ro
+    restart: unless-stopped

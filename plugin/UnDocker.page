@@ -1,0 +1,10 @@
+Menu="Tasks:61"
+Type="xmenu"
+Title="UnDocker"
+Name="UnDocker"
+Icon="docker"
+Cond="exec(\"grep -o '^DOCKER_ENABLED=.yes' /boot/config/docker.cfg 2>/dev/null\")"
+---
+<?php
+include("/usr/local/emhttp/plugins/undockerui/undockerui.php");
+?>

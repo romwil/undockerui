@@ -1,0 +1,2 @@
+# Unraid .page headers must split on LF-only newlines before --- (see pushui.sh).
+*.page text eol=lf

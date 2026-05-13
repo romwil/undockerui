@@ -1,0 +1,5 @@
+[
+  { "name": "PLEX", "url": "http://10.10.1.200:32400" },
+  { "name": "SEERR", "url": "http://10.10.1.121:5055" },
+  { "name": "RETRO DECK", "url": "http://10.10.1.70" }
+]

@@ -1,0 +1,11 @@
+{
+  "Plexomat": "http://10.10.1.200:32400/web",
+  "sabnzbd": "http://10.10.1.201:8080",
+  "MeTube": "http://10.10.1.203:8081",
+  "Radarr": "http://10.10.1.210:7878",
+  "Sonarr": "http://10.10.1.220:8989",
+  "Seerr": "http://10.10.1.121:5055",
+  "Pihole-Alpha": "http://10.10.1.222/admin",
+  "Pihole-Beta": "http://10.10.1.223/admin",
+  "PeaNUT": "http://10.10.1.202:8080"
+}

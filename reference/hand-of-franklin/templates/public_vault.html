@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VAULT 1848 // CITIZEN</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect fill='%23031003' width='32' height='32'/><text x='16' y='22' font-size='18' text-anchor='middle' fill='%2339ff14' font-family='monospace'>V</text></svg>" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --green: #39ff14;
+            --green-dim: rgba(57, 255, 20, 0.65);
+            --green-glow: rgba(57, 255, 20, 0.2);
+            --bg: #031003;
+            --panel: #0a180a;
+            --border: #1a3d1a;
+            --lore-spd: 1800s;
+            --font: 'Share Tech Mono', 'Courier New', monospace;
+            --ticker-h: 136px;
+        }
+        * { box-sizing: border-box; }
+        html { height: 100%; }
+        body {
+            background: var(--bg);
+            color: var(--green);
+            font-family: var(--font);
+            margin: 0;
+            padding: calc(20px + env(safe-area-inset-top, 0px)) calc(100px + env(safe-area-inset-right, 0px)) calc(var(--ticker-h) + 20px + env(safe-area-inset-bottom, 0px)) calc(20px + env(safe-area-inset-left, 0px));
+            overflow-x: hidden;
+            text-transform: uppercase;
+            font-size: clamp(13px, 3.4vw, 14px);
+            letter-spacing: 0.05em;
+            min-width: 280px;
+        }
+        .crt {
+            position: relative;
+            height: 100%;
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            overflow: visible;
+        }
+        .crt-fill {
+            flex: 1 1 auto;
+            min-height: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .crt::before {
+            content: " ";
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(rgba(0,0,0,0) 50%, rgba(0,0,0,0.12) 50%);
+            background-size: 100% 4px;
+            z-index: 1000;
+            pointer-events: none;
+        }
+        .crt::after {
+            content: " ";
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.55) 100%);
+            z-index: 999;
+            pointer-events: none;
+        }
+        .vault-frame {
+            position: fixed;
+            inset: 8px;
+            border: 3px solid var(--green);
+            border-radius: 2px;
+            box-shadow: inset 0 0 30px var(--green-glow), 0 0 20px var(--green-glow);
+            pointer-events: none;
+            z-index: 998;
+        }
+        .hamburger {
+            position: fixed;
+            top: calc(18px + env(safe-area-inset-top, 0px));
+            right: calc(24px + env(safe-area-inset-right, 0px));
+            cursor: pointer;
+            z-index: 1100;
+            font-size: 22px;
+            border: 2px solid var(--green);
+            padding: 8px 12px;
+            min-width: 44px;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+            background: var(--panel);
+            color: var(--green);
+            font-family: var(--font);
+            border-radius: 2px;
+            box-shadow: 0 0 10px var(--green-glow);
+        }
+        .hamburger:hover { background: var(--green); color: var(--bg); }
+        #settings-panel {
+            position: fixed;
+            top: calc(58px + env(safe-area-inset-top, 0px));
+            right: calc(24px + env(safe-area-inset-right, 0px));
+            background: var(--panel);
+            border: 2px solid var(--green);
+            padding: 16px;
+            display: none;
+            z-index: 1100;
+            width: 220px;
+            max-height: calc(100dvh - 72px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
+            overflow-y: auto;
+            box-shadow: 0 0 25px rgba(0,0,0,0.8), 0 0 15px var(--green-glow);
+            border-radius: 2px;
+        }
+        #settings-panel label { display: block; font-size: 0.75em; margin-bottom: 6px; color: var(--green-dim); }
+        #settings-panel input[type="range"] { width: 100%; accent-color: var(--green); margin-bottom: 12px; }
+        #settings-panel input[type="text"] { width: 100%; background: var(--bg); color: var(--green); border: 1px solid var(--border); padding: 8px; font-family: var(--font); margin-bottom: 8px; }
+        #settings-panel button {
+            width: 100%;
+            background: var(--green);
+            color: var(--bg);
+            border: 2px solid var(--green);
+            padding: 8px;
+            font-family: var(--font);
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            margin-top: 10px;
+            border-radius: 2px;
+        }
+        #settings-panel button:hover { filter: brightness(1.15); box-shadow: 0 0 12px var(--green-glow); }
+        #settings-panel .gnr-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 6px;
+            margin-bottom: 4px;
+        }
+        #settings-panel .gnr-row button {
+            flex: 1 1 45%;
+            margin-top: 0;
+            padding: 8px;
+            font-size: 0.8em;
+        }
+        #gnr-status {
+            font-size: 0.7em;
+            color: var(--green-dim);
+            margin-bottom: 6px;
+            line-height: 1.35;
+        }
+        #gnr-audio { display: none; }
+
+        .header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--green);
+            padding-bottom: 10px;
+            margin-bottom: 18px;
+            text-shadow: 0 0 8px var(--green-glow);
+            gap: 16px;
+            padding-right: 4px;
+        }
+        .header-bar > span:first-child { flex: 1; min-width: 0; }
+        #clock { font-size: 1.1em; color: var(--green-dim); letter-spacing: 0.15em; flex-shrink: 0; }
+        .radio-indicator {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            flex-shrink: 0;
+            width: 36px;
+            height: 28px;
+            position: relative;
+            z-index: 1102;
+        }
+        .radio-indicator.tuning .gnr-live { display: none !important; }
+        .radio-indicator.tuning .gnr-tune { display: block; }
+        .radio-indicator.streaming .gnr-tune { display: none !important; }
+        .radio-indicator.streaming .gnr-live { display: flex !important; }
+        .gnr-tune {
+            display: none;
+            width: 26px;
+            height: 26px;
+            position: relative;
+        }
+        .gnr-tune::before,
+        .gnr-tune::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: 2px solid transparent;
+        }
+        .gnr-tune::before {
+            border-top-color: var(--green);
+            border-left-color: rgba(57, 255, 20, 0.35);
+            animation: gnr-swirl-a 1.1s linear infinite;
+        }
+        .gnr-tune::after {
+            inset: 4px;
+            border-bottom-color: var(--green-dim);
+            border-right-color: rgba(57, 255, 20, 0.2);
+            animation: gnr-swirl-b 0.85s linear infinite reverse;
+        }
+        @keyframes gnr-swirl-a { to { transform: rotate(360deg); } }
+        @keyframes gnr-swirl-b { to { transform: rotate(-360deg); } }
+        .gnr-live {
+            display: none;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 3px;
+            height: 22px;
+        }
+        .gnr-live span {
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--green-dim), var(--green));
+            transform-origin: bottom center;
+            animation: gnr-bar 0.5s ease-in-out infinite alternate;
+            box-shadow: 0 0 6px var(--green-glow);
+        }
+        .gnr-live span:nth-child(1) { animation-delay: 0s; min-height: 30%; }
+        .gnr-live span:nth-child(2) { animation-delay: 0.12s; min-height: 45%; }
+        .gnr-live span:nth-child(3) { animation-delay: 0.24s; min-height: 55%; }
+        .gnr-live span:nth-child(4) { animation-delay: 0.08s; min-height: 40%; }
+        .gnr-live span:nth-child(5) { animation-delay: 0.2s; min-height: 65%; }
+        @keyframes gnr-bar {
+            from { transform: scaleY(0.25); opacity: 0.65; }
+            to { transform: scaleY(1); opacity: 1; }
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 20px;
+        }
+        .sector {
+            border: 2px solid var(--green);
+            padding: 18px;
+            position: relative;
+            min-height: 260px;
+            background: var(--panel);
+            border-radius: 2px;
+            box-shadow: inset 0 0 40px rgba(0,0,0,0.5), 0 0 15px var(--green-glow);
+        }
+        .sector-title {
+            position: absolute;
+            top: -14px;
+            left: 14px;
+            background: var(--bg);
+            padding: 4px 14px;
+            font-weight: bold;
+            border: 2px solid var(--green);
+            border-radius: 2px;
+            letter-spacing: 0.12em;
+            box-shadow: 0 0 10px var(--green-glow);
+        }
+        .portal-link {
+            color: var(--green);
+            text-decoration: none;
+            margin: 14px 0;
+            font-size: 1.1em;
+            border: 1px solid var(--border);
+            padding: 12px;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border-radius: 2px;
+            transition: background 0.2s, color 0.2s;
+        }
+        .portal-link:hover {
+            background: var(--green);
+            color: var(--bg);
+            box-shadow: 0 0 12px var(--green-glow);
+        }
+        #pub-status {
+            margin-top: 24px;
+            font-size: 1em;
+            line-height: 1.8;
+            color: var(--green-dim);
+        }
+        #pub-status .status-ok { color: var(--green); }
+        #pub-status .status-stale { color: var(--green-dim); }
+        #pub-status .pub-status-detail { font-size: 0.92em; color: var(--green-dim); line-height: 1.5; }
+        #pub-status.pub-status-skeleton { color: var(--green-dim); min-height: 5em; }
+
+        .ticker-wrap {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            min-height: var(--ticker-h);
+            padding-bottom: env(safe-area-inset-bottom, 0px);
+            box-sizing: border-box;
+            border-top: 4px solid var(--green);
+            background: linear-gradient(180deg, rgba(8, 24, 8, 0.98) 0%, rgba(3, 16, 3, 0.99) 55%, #000 100%);
+            box-shadow: 0 -8px 28px var(--green-glow), inset 0 1px 0 rgba(57, 255, 20, 0.12);
+            z-index: 1102;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            overflow: visible;
+        }
+        .ticker-chyron-strip {
+            flex-shrink: 0;
+            height: 5px;
+            background: repeating-linear-gradient(90deg, var(--green) 0 6px, rgba(57, 255, 20, 0.15) 6px 12px);
+            opacity: 0.85;
+            box-shadow: 0 0 12px var(--green-glow);
+        }
+        .ticker-chyron-row {
+            flex: 1;
+            display: flex;
+            flex-direction: row;
+            align-items: stretch;
+            min-height: 0;
+        }
+        .ticker-clock-col {
+            flex: 0 0 5.5rem;
+            max-width: 22vw;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 8px 12px;
+            background: rgba(0, 0, 0, 0.55);
+            border-right: 2px solid var(--green);
+            color: var(--green);
+            text-align: center;
+            box-shadow: inset 0 0 20px rgba(57, 255, 20, 0.06);
+        }
+        .ticker-clock-label {
+            font-size: 0.58em;
+            letter-spacing: 0.28em;
+            color: var(--green-dim);
+            margin-bottom: 6px;
+            line-height: 1.2;
+        }
+        .ticker-clock {
+            font-size: clamp(1rem, 2.4vw, 1.35rem);
+            font-weight: bold;
+            letter-spacing: 0.12em;
+            line-height: 1.2;
+            text-shadow: 0 0 10px var(--green-glow);
+            font-variant-numeric: tabular-nums;
+        }
+        .ticker-chyron-tag {
+            margin-top: 8px;
+            font-size: 0.52em;
+            letter-spacing: 0.2em;
+            color: var(--green-dim);
+            opacity: 0.9;
+        }
+        .ticker-brand {
+            flex: 0 0 152px;
+            max-width: 28vw;
+            align-self: stretch;
+            background: var(--green);
+            color: var(--bg);
+            padding: 14px 12px 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-right: 4px double var(--bg);
+            font-weight: bold;
+            font-size: 0.78em;
+            letter-spacing: 0.16em;
+            line-height: 1.35;
+            text-align: center;
+            box-shadow: 4px 0 12px rgba(0,0,0,0.45);
+            overflow: visible;
+        }
+        .ticker-brand .sub {
+            font-size: 0.72em;
+            letter-spacing: 0.22em;
+            margin-top: 4px;
+            opacity: 0.9;
+            line-height: 1.3;
+        }
+        .ticker-brand .rule {
+            margin-top: 6px;
+            height: 2px;
+            flex-shrink: 0;
+            background: repeating-linear-gradient(90deg, var(--bg) 0 4px, transparent 4px 7px);
+            opacity: 0.35;
+        }
+        .lore-row {
+            flex: 1;
+            min-width: 0;
+            align-self: stretch;
+            background: transparent;
+            color: var(--green);
+            padding: 12px 14px 14px 16px;
+            font-weight: bold;
+            line-height: 1.5;
+            display: flex;
+            align-items: stretch;
+            border-left: 1px dashed rgba(57, 255, 20, 0.25);
+            overflow: visible;
+        }
+        .marquee-viewport {
+            overflow: hidden;
+            width: 100%;
+            flex: 1;
+            min-width: 0;
+            min-height: 3.25rem;
+            display: flex;
+            align-items: center;
+            padding-block: 0.4rem;
+            mask-image: linear-gradient(90deg, transparent, #000 12px, #000 calc(100% - 12px), transparent);
+            mask-size: 100% 100%;
+            mask-repeat: no-repeat;
+            -webkit-mask-image: linear-gradient(90deg, transparent, #000 12px, #000 calc(100% - 12px), transparent);
+            -webkit-mask-size: 100% 100%;
+            -webkit-mask-repeat: no-repeat;
+        }
+        .marquee-track {
+            display: flex;
+            align-items: center;
+            width: max-content;
+            animation: marquee-seamless var(--lore-spd) linear infinite;
+            will-change: transform;
+        }
+        .marquee-seg {
+            flex-shrink: 0;
+            padding-right: 8ch;
+            white-space: nowrap;
+            line-height: 1.45;
+            font-size: clamp(0.95rem, 4vw, 1.55rem);
+            letter-spacing: 0.06em;
+            text-shadow: 0 0 8px var(--green-glow);
+        }
+        @keyframes marquee-seamless {
+            from { transform: translate3d(0, 0, 0); }
+            to { transform: translate3d(-50%, 0, 0); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .marquee-track { animation: none !important; }
+            .gnr-tune::before, .gnr-tune::after { animation: none !important; }
+            .gnr-live span { animation: none !important; }
+        }
+
+        #settings-panel .overseer-link {
+            display: block;
+            width: 100%;
+            margin: 14px 0 4px;
+            padding: 10px 8px;
+            text-align: center;
+            font-size: 0.72em;
+            line-height: 1.35;
+            color: var(--green);
+            border: 1px dashed var(--border);
+            text-decoration: none;
+            border-radius: 2px;
+            transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+        }
+        #settings-panel .overseer-link:hover {
+            background: rgba(57, 255, 20, 0.12);
+            border-color: var(--green);
+            box-shadow: 0 0 12px var(--green-glow);
+        }
+
+        #hack-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 20000;
+            background: #000;
+            color: #33ff33;
+            font-family: var(--font);
+            font-size: 13px;
+            line-height: 1.45;
+            text-transform: uppercase;
+            overflow: hidden;
+            cursor: default;
+        }
+        #hack-overlay.active { display: flex; flex-direction: column; }
+        #hack-overlay .hack-scanlines {
+            pointer-events: none;
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(rgba(0,0,0,0) 50%, rgba(0,0,0,0.18) 50%);
+            background-size: 100% 3px;
+            z-index: 2;
+        }
+        #hack-overlay .hack-inner {
+            position: relative;
+            z-index: 1;
+            flex: 1;
+            padding: 24px 28px;
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        #hack-overlay .robc-header {
+            color: #33ff33;
+            text-shadow: 0 0 8px rgba(51, 255, 51, 0.4);
+            margin-bottom: 8px;
+            letter-spacing: 0.08em;
+        }
+        #hack-overlay .robc-sub {
+            color: #1a8f1a;
+            font-size: 0.85em;
+            margin-bottom: 20px;
+        }
+        #hack-overlay #hack-log {
+            min-height: 180px;
+            white-space: pre-wrap;
+            word-break: break-word;
+            margin-bottom: 16px;
+        }
+        #hack-overlay #hack-log .cursor-blink::after {
+            content: '█';
+            animation: hack-cursor 0.7s step-end infinite;
+        }
+        @keyframes hack-cursor {
+            50% { opacity: 0; }
+        }
+        #hack-overlay .hack-hex {
+            font-size: 0.7em;
+            color: #1a6b1a;
+            height: 120px;
+            overflow: hidden;
+            border: 1px solid #1a3d1a;
+            padding: 8px;
+            margin-bottom: 16px;
+            line-height: 1.2;
+            font-family: var(--font);
+        }
+        #hack-overlay .hack-progress-wrap {
+            margin: 12px 0;
+            height: 14px;
+            border: 1px solid #33ff33;
+            padding: 2px;
+        }
+        #hack-overlay .hack-progress-bar {
+            height: 100%;
+            width: 0%;
+            background: #33ff33;
+            box-shadow: 0 0 10px #33ff33;
+            transition: width 0.15s linear;
+        }
+        #hack-overlay .hack-words {
+            margin-top: 16px;
+        }
+        #hack-overlay .hack-words span {
+            display: inline-block;
+            margin: 6px 10px 6px 0;
+            padding: 4px 10px;
+            border: 1px solid #2a5a2a;
+            cursor: pointer;
+            user-select: none;
+        }
+        #hack-overlay .hack-words span:hover {
+            background: rgba(51, 255, 51, 0.15);
+            border-color: #33ff33;
+        }
+        #hack-overlay .hack-words span.denied {
+            animation: hack-shake 0.35s ease;
+            color: #ff4444;
+            border-color: #662222;
+        }
+        @keyframes hack-shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-4px); }
+            75% { transform: translateX(4px); }
+        }
+        #hack-overlay .hack-status {
+            margin-top: 12px;
+            min-height: 1.4em;
+            color: #5fdf5f;
+        }
+
+        /* --- TV / wall mode: readable from ~3m, big touch targets, single column --- */
+        body.tv-mode {
+            font-size: clamp(17px, 2.1vw, 26px);
+            padding: 28px 32px calc(var(--ticker-h) + 28px) 28px;
+            padding-right: 120px;
+        }
+        body.tv-mode .vault-frame { inset: 10px; border-width: 4px; }
+        body.tv-mode .hamburger {
+            font-size: 28px;
+            padding: 14px 18px;
+            top: 22px;
+            right: 28px;
+        }
+        body.tv-mode #settings-panel { width: min(420px, 92vw); padding: 22px; }
+        body.tv-mode #settings-panel label { font-size: 0.85em; }
+        body.tv-mode #settings-panel button,
+        body.tv-mode #settings-panel .gnr-row button { font-size: 0.9em; padding: 12px; }
+        body.tv-mode .header-bar {
+            padding-bottom: 14px;
+            margin-bottom: 22px;
+            border-bottom-width: 3px;
+            flex-wrap: wrap;
+            row-gap: 10px;
+            align-items: center;
+        }
+        body.tv-mode .header-bar > span:first-child {
+            font-size: clamp(1.05em, 2.4vw, 1.45em);
+            font-weight: bold;
+            color: var(--green);
+            text-shadow: 0 0 14px var(--green-glow);
+        }
+        body.tv-mode #clock {
+            font-size: 1.45em;
+            font-weight: bold;
+            color: var(--green);
+            flex-shrink: 0;
+            margin-left: auto;
+        }
+        /* GNR header widget + crawl: larger for wall viewing */
+        body.tv-mode .radio-indicator {
+            width: 44px;
+            height: 36px;
+            margin-right: 14px;
+        }
+        body.tv-mode .gnr-tune {
+            width: 34px;
+            height: 34px;
+        }
+        body.tv-mode .gnr-tune::after { inset: 5px; }
+        body.tv-mode .gnr-live {
+            height: 28px;
+            gap: 4px;
+        }
+        body.tv-mode .gnr-live span { width: 4px; }
+        body.tv-mode .marquee-seg {
+            font-size: clamp(1.15rem, 2.8vw, 1.75rem);
+            letter-spacing: 0.06em;
+        }
+        body.tv-mode .ticker-clock-col {
+            flex-basis: 6rem;
+            max-width: 26vw;
+        }
+        body.tv-mode .ticker-clock {
+            font-size: clamp(1.15rem, 3vw, 1.65rem);
+        }
+        body.tv-mode #settings-panel select#temp-unit-pub {
+            min-height: 48px;
+            padding: 10px 12px;
+            font-size: 0.88em;
+        }
+        body.tv-mode #gnr-status { font-size: 0.82em; }
+        .citizen-tv-hint { display: none; }
+        body.tv-mode .citizen-tv-hint {
+            display: block;
+            font-size: 0.72em;
+            color: var(--green-dim);
+            letter-spacing: 0.1em;
+            margin: -6px 0 16px 0;
+            padding: 8px 12px;
+            border: 1px dashed var(--border);
+            text-align: center;
+            line-height: 1.45;
+        }
+        body.tv-mode .grid {
+            grid-template-columns: 1fr;
+            gap: 28px;
+            margin-top: 12px;
+        }
+        body.tv-mode .sector {
+            min-height: 0;
+            padding: 22px 20px;
+        }
+        body.tv-mode .sector-title {
+            font-size: 0.95em;
+            padding: 6px 18px;
+            top: -16px;
+        }
+        body.tv-mode .portal-link {
+            font-size: 1.35em;
+            padding: 20px 16px;
+            margin: 16px 0;
+        }
+        body.tv-mode #pub-status {
+            font-size: 1.12em;
+            margin-top: 16px;
+            line-height: 1.75;
+        }
+        body.tv-mode .lore-row {
+            font-size: 1.08em;
+            padding: 10px 12px 12px 14px;
+            line-height: 1.5;
+        }
+        body.tv-mode .ticker-brand { flex-basis: 148px; font-size: 0.72em; padding: 12px 10px 14px; line-height: 1.35; }
+        body.tv-mode { --ticker-h: 124px; }
+        body.tv-mode .ticker-wrap {
+            min-height: max(var(--ticker-h), 104px);
+        }
+        body.tv-mode .marquee-viewport {
+            min-height: 3.5rem;
+            padding-block: 0.45rem;
+        }
+        body.tv-mode {
+            padding-left: calc(20px + env(safe-area-inset-left, 0px));
+            padding-right: calc(max(24px, env(safe-area-inset-right, 0px)) + 12px);
+        }
+
+        /* Phase 1 — mobile exceptional (Citizen) */
+        @media (max-width: 600px) {
+            body:not(.tv-mode) {
+                padding-right: calc(72px + env(safe-area-inset-right, 0px));
+                padding-left: calc(14px + env(safe-area-inset-left, 0px));
+            }
+            #settings-panel {
+                top: 0;
+                right: 0;
+                left: 0;
+                bottom: 0;
+                width: 100%;
+                max-width: none;
+                max-height: none;
+                height: 100dvh;
+                height: 100svh;
+                padding: calc(20px + env(safe-area-inset-top, 0px)) calc(16px + env(safe-area-inset-right, 0px)) calc(20px + env(safe-area-inset-bottom, 0px)) calc(16px + env(safe-area-inset-left, 0px));
+                z-index: 1200;
+                border-radius: 0;
+                border-width: 0 0 0 4px;
+            }
+            body:not(.tv-mode).citizen-menu-open {
+                overflow: hidden;
+                touch-action: none;
+            }
+            #settings-panel .overseer-link {
+                min-height: 44px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            #settings-panel button {
+                min-height: 44px;
+            }
+        }
+    </style>
+</head>
+<body class="crt{% if tv_mode %} tv-mode{% endif %}">
+    <div class="vault-frame" aria-hidden="true"></div>
+    <div class="hamburger" onclick="toggleMenu()" aria-label="Settings">☰</div>
+    <div id="settings-panel">
+        <label>BROADCAST SPEED (SEC) — RANGE MATCHES OVERSEER; SAVED SEPARATELY</label>
+        <input type="range" id="lore-range" min="240" max="3600" value="1800" onchange="updateSpeeds()">
+        <label>WEATHER ZIP (US)</label>
+        <input type="text" id="weather-zip" maxlength="10" placeholder="e.g. 90210" onchange="saveZip()">
+        <label>DISK TEMP (OVERSEER)</label>
+        <span style="font-size:0.65em;color:var(--green-dim);display:block;margin-bottom:8px;line-height:1.35;">APPLIES ON OVERSEER STORAGE MATRIX. CITIZEN PAGE STORES PREFERENCE FOR CONSISTENCY.</span>
+        <select id="temp-unit-pub" onchange="saveTempUnitPub()" style="width:100%;margin-bottom:12px;background:var(--bg);color:var(--green);border:1px solid var(--green);padding:8px;font-family:var(--font);text-transform:uppercase;">
+            <option value="C">CELSIUS (°C)</option>
+            <option value="F">FAHRENHEIT (°F)</option>
+        </select>
+        <label>GNR — GALAXY NEWS RADIO</label>
+        <div id="gnr-status">PLAY TUNES THE STREAM; STOP ENDS PLAYBACK AND CLEARS THE SERVER CACHE.</div>
+        <div class="gnr-row">
+            <button type="button" onclick="gnrPlay()">▶ PLAY</button>
+            <button type="button" onclick="gnrStop()">■ STOP</button>
+        </div>
+        <audio id="gnr-audio" preload="none" playsinline></audio>
+        {% if tv_mode %}
+        <a href="/" class="overseer-link">&lt;&lt; EXIT TV MODE (NORMAL VIEW)</a>
+        {% else %}
+        <a href="/tv" class="overseer-link">TV / WALL MODE — LARGE TYPE FOR LIVING ROOM</a>
+        <a href="#" class="overseer-link" id="overseer-hack-link" onclick="beginOverseerHack(event)">&gt;&gt; CLASSIFIED: OVERSEER TERMLINK</a>
+        {% endif %}
+        <hr>
+        <a href="/help/citizen" class="overseer-link" target="_blank">📖 HELP — CITIZEN TERMINAL GUIDE</a>
+        <button type="button" onclick="toggleMenu()">CLOSE</button>
+    </div>
+
+    <div id="hack-overlay" aria-hidden="true">
+        <div class="hack-scanlines"></div>
+        <div class="hack-inner">
+            <div class="robc-header">ROBCO INDUSTRIES (TM) TERMLINK PROTOCOL</div>
+            <div class="robc-sub">COPYRIGHT 2077 ROBCO INDUSTRIES — VAULT-TEC SUBSYSTEM V1848</div>
+            <div id="hack-log"></div>
+            <div class="hack-hex" id="hack-hex"></div>
+            <div class="hack-progress-wrap"><div class="hack-progress-bar" id="hack-progress"></div></div>
+            <div class="hack-words" id="hack-words" style="display:none;"></div>
+            <div class="hack-status" id="hack-status"></div>
+        </div>
+    </div>
+
+    <div class="crt-fill">
+    <div class="header-bar">
+        <span>{% if tv_mode %}VAULT 1848 // CITIZEN (TV WALL){% else %}VAULT 1848 // MARPLE CITIZEN TERMINAL{% endif %}</span>
+        <span id="radio-indicator" class="radio-indicator" style="display:none;" title="">
+            <span class="gnr-tune" aria-hidden="true"></span>
+            <span class="gnr-live" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></span>
+        </span>
+        <span id="clock">00:00:00</span>
+    </div>
+    {% if tv_mode %}
+    <p class="citizen-tv-hint">TV WALL — ☰ MENU: LORE SPEED · WEATHER · GNR · DISK TEMP °C/°F (FOR OVERSEER MATRIX)</p>
+    {% endif %}
+
+    <div class="grid">
+        <div class="sector">
+            <div class="sector-title">HOLOVISION PORTALS</div>
+            <div id="portals">LOADING...</div>
+        </div>
+        <div class="sector">
+            <div class="sector-title">VAULT STATUS</div>
+            <div id="pub-status" class="pub-status-skeleton">CONNECTING…</div>
+        </div>
+    </div>
+    </div>
+
+    <div class="ticker-wrap" role="region" aria-label="Vault news wire">
+        <div class="ticker-chyron-strip" aria-hidden="true"></div>
+        <div class="ticker-chyron-row">
+            <div class="ticker-clock-col">
+                <span class="ticker-clock-label">LOCAL</span>
+                <span class="ticker-clock" id="ticker-clock">00:00:00</span>
+                <span class="ticker-chyron-tag">VBN · CHYRON</span>
+            </div>
+            <div class="ticker-brand">PIP-BOY<span class="sub">NEWS WIRE</span><div class="rule" aria-hidden="true"></div></div>
+            <div class="lore-row">
+                <div class="marquee-viewport">
+                    <div class="marquee-track" id="lore-track">
+                        <span class="marquee-seg" id="lore-a">…</span>
+                        <span class="marquee-seg" id="lore-b" aria-hidden="true">…</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            const p = document.getElementById('settings-panel');
+            if (!p) return;
+            const open = p.style.display !== 'block';
+            p.style.display = open ? 'block' : 'none';
+            document.body.classList.toggle('citizen-menu-open', open);
+        }
+        function updateSpeeds() {
+            var l = document.getElementById('lore-range').value + 's';
+            document.documentElement.style.setProperty('--lore-spd', l);
+            try { localStorage.setItem('v1848_pub_lore', l); } catch (e) {}
+        }
+        var savedL = '1800s';
+        try {
+            var stored = localStorage.getItem('v1848_pub_lore');
+            if (stored && /^\d+s$/.test(String(stored).trim())) {
+                var n = parseInt(stored, 10);
+                if (n >= 240 && n <= 3600) savedL = n + 's';
+            }
+        } catch (e) { savedL = '1800s'; }
+        document.documentElement.style.setProperty('--lore-spd', savedL);
+        var rangeEl = document.getElementById('lore-range');
+        if (rangeEl) rangeEl.value = savedL.replace('s', '');
+        function tickTickerClock() {
+            var el = document.getElementById('ticker-clock');
+            if (!el) return;
+            el.textContent = new Date().toLocaleTimeString(undefined, { hour12: false });
+        }
+        tickTickerClock();
+        setInterval(tickTickerClock, 1000);
+        try {
+            var z = localStorage.getItem('v1848_weather_zip') || '';
+            var zi = document.getElementById('weather-zip');
+            if (zi) zi.value = z;
+        } catch (e) {}
+        function saveZip() {
+            try {
+                localStorage.setItem('v1848_weather_zip', (document.getElementById('weather-zip') || {}).value || '');
+            } catch (e) {}
+        }
+
+        function gnrAudioEl() {
+            return document.getElementById('gnr-audio');
+        }
+        function saveTempUnitPub() {
+            var sel = document.getElementById('temp-unit-pub');
+            if (sel) try { localStorage.setItem('v1848_temp_unit', sel.value); } catch (e) {}
+        }
+        function initTempUnitPub() {
+            var sel = document.getElementById('temp-unit-pub');
+            if (!sel) return;
+            try { sel.value = localStorage.getItem('v1848_temp_unit') === 'F' ? 'F' : 'C'; } catch (e) {}
+        }
+        initTempUnitPub();
+        function updateRadioIndicator(state) {
+            var ind = document.getElementById('radio-indicator');
+            if (!ind) return;
+            if (state === 'tuning') {
+                ind.style.display = 'inline-flex';
+                ind.className = 'radio-indicator tuning';
+                ind.title = 'GNR: tuning…';
+            } else if (state === 'streaming') {
+                ind.style.display = 'inline-flex';
+                ind.className = 'radio-indicator streaming';
+                ind.title = 'GNR: live';
+            } else {
+                ind.style.display = 'none';
+                ind.className = 'radio-indicator';
+                ind.title = '';
+            }
+        }
+        async function gnrPlay() {
+            var st = document.getElementById('gnr-status');
+            updateRadioIndicator('tuning');
+            if (st) st.textContent = 'GNR: TUNING (YT-DLP)…';
+            try {
+                var res = await fetch('/api/gnr/start', { method: 'POST' });
+                var data = await res.json().catch(function() { return {}; });
+                if (!data.ok) {
+                    updateRadioIndicator('off');
+                    if (st) st.textContent = 'GNR FAILED: ' + (data.error || ('HTTP ' + res.status));
+                    return;
+                }
+                var a = gnrAudioEl();
+                if (!a) {
+                    updateRadioIndicator('off');
+                    return;
+                }
+                var base = window.location.origin + '/api/gnr/stream';
+                try {
+                    var u = new URL(base);
+                    u.searchParams.set('t', String(Date.now()));
+                    a.src = u.toString();
+                } catch (e) {
+                    a.src = base + '?t=' + Date.now();
+                }
+                a.addEventListener('play', function() { updateRadioIndicator('streaming'); });
+                a.addEventListener('pause', function() { updateRadioIndicator('off'); });
+                a.addEventListener('ended', function() { updateRadioIndicator('off'); });
+                a.addEventListener('error', function() { updateRadioIndicator('off'); });
+                await a.play();
+                if (st) st.textContent = 'GNR ON AIR';
+            } catch (err) {
+                updateRadioIndicator('off');
+                if (st) st.textContent = 'GNR ERROR: ' + (err && err.message ? err.message : 'NETWORK');
+            }
+        }
+        async function gnrStop() {
+            var a = gnrAudioEl();
+            if (a) {
+                a.pause();
+                a.currentTime = 0;
+                a.removeAttribute('src');
+                a.load();
+            }
+            updateRadioIndicator('off');
+            try { await fetch('/api/gnr/stop', { method: 'POST' }); } catch (e) {}
+            var st = document.getElementById('gnr-status');
+            if (st) st.textContent = 'GNR OFF';
+        }
+
+        function sleep(ms) { return new Promise(function(r) { setTimeout(r, ms); }); }
+        var _hackWrong = 0;
+        var _hackAudioCtx = null;
+
+        function ensureHackAudio() {
+            try {
+                if (!_hackAudioCtx) {
+                    _hackAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                if (_hackAudioCtx.state === 'suspended') {
+                    _hackAudioCtx.resume();
+                }
+            } catch (e) {
+                return null;
+            }
+            return _hackAudioCtx;
+        }
+
+        /** Mechanical keyboard-ish click: noise burst + short tone (variant: soft | normal | hard) */
+        function hackKeySound(variant) {
+            var ctx = ensureHackAudio();
+            if (!ctx) return;
+            var t = ctx.currentTime;
+            var vol = variant === 'soft' ? 0.045 : variant === 'hard' ? 0.14 : 0.09;
+            var dur = variant === 'soft' ? 0.022 : 0.035;
+
+            var noiseBuf = ctx.createBuffer(1, Math.ceil(ctx.sampleRate * 0.012), ctx.sampleRate);
+            var ch = noiseBuf.getChannelData(0);
+            for (var i = 0; i < ch.length; i++) {
+                ch[i] = (Math.random() * 2 - 1) * 0.85;
+            }
+            var noise = ctx.createBufferSource();
+            noise.buffer = noiseBuf;
+            var bp = ctx.createBiquadFilter();
+            bp.type = 'bandpass';
+            bp.frequency.setValueAtTime(1800 + Math.random() * 600, t);
+            bp.Q.setValueAtTime(4.5, t);
+            var ng = ctx.createGain();
+            ng.gain.setValueAtTime(vol * 0.55, t);
+            ng.gain.exponentialRampToValueAtTime(0.001, t + dur);
+            noise.connect(bp);
+            bp.connect(ng);
+            ng.connect(ctx.destination);
+            noise.start(t);
+            noise.stop(t + dur + 0.01);
+
+            var osc = ctx.createOscillator();
+            osc.type = 'square';
+            osc.frequency.setValueAtTime(420 + Math.random() * 180, t);
+            var og = ctx.createGain();
+            og.gain.setValueAtTime(vol * 0.35, t);
+            og.gain.exponentialRampToValueAtTime(0.001, t + dur * 1.2);
+            osc.connect(og);
+            og.connect(ctx.destination);
+            osc.start(t);
+            osc.stop(t + dur + 0.02);
+        }
+
+        function hackKeyBurst(count, gapMs) {
+            for (var b = 0; b < count; b++) {
+                (function(i) {
+                    setTimeout(function() { hackKeySound(i === 0 ? 'normal' : 'soft'); }, i * gapMs);
+                })(b);
+            }
+        }
+
+        function beginOverseerHack(ev) {
+            if (ev) ev.preventDefault();
+            ensureHackAudio();
+            var panel = document.getElementById('settings-panel');
+            if (panel) panel.style.display = 'none';
+            runOverseerHackSequence();
+        }
+
+        async function runOverseerHackSequence() {
+            var overlay = document.getElementById('hack-overlay');
+            var logEl = document.getElementById('hack-log');
+            var hexEl = document.getElementById('hack-hex');
+            var prog = document.getElementById('hack-progress');
+            var wordsEl = document.getElementById('hack-words');
+            var statusEl = document.getElementById('hack-status');
+            if (!overlay || !logEl) return;
+
+            _hackWrong = 0;
+            overlay.classList.add('active');
+            overlay.setAttribute('aria-hidden', 'false');
+            logEl.innerHTML = '';
+            hexEl.textContent = '';
+            prog.style.width = '0%';
+            wordsEl.style.display = 'none';
+            wordsEl.innerHTML = '';
+            statusEl.textContent = '';
+
+            async function typeLine(text, withCursor) {
+                var line = document.createElement('div');
+                logEl.appendChild(line);
+                for (var c = 0; c < text.length; c++) {
+                    line.textContent = text.slice(0, c + 1);
+                    logEl.scrollTop = logEl.scrollHeight;
+                    var ch = text.charAt(c);
+                    if (ch !== ' ' && ch !== '\n') {
+                        hackKeySound(ch === '.' || ch === '…' ? 'soft' : 'normal');
+                    }
+                    await sleep(10 + Math.random() * 28);
+                }
+                if (withCursor) line.className = 'cursor-blink';
+            }
+
+            var lines = [
+                '> ESTABLISHING SECURE HANDSHAKE…',
+                '> VAULT-TEC AUTHORITY: CITIZEN CLEARANCE DETECTED',
+                '> UPLINK TO OVERSEER NODE 1848…',
+                '> WARNING: UNAUTHORIZED ACCESS WILL BE LOGGED',
+                '> INJECTING BUFFER OVERFLOW PAYLOAD…',
+                '> BYPASSING ROBCO SAFEGUARD LAYER 2 OF 5…',
+                '> BYPASSING ROBCO SAFEGUARD LAYER 4 OF 5…',
+                '> ADMINISTRATIVE KERNEL EXPOSED'
+            ];
+
+            for (var i = 0; i < lines.length; i++) {
+                await typeLine(lines[i], i === lines.length - 1);
+                await sleep(120 + Math.random() * 140);
+                if (logEl.lastChild) logEl.lastChild.className = '';
+            }
+
+            var hexLines = [];
+            for (var h = 0; h < 40; h++) {
+                var row = '';
+                for (var c = 0; c < 8; c++) {
+                    row += ('0x' + Math.floor(Math.random() * 65535).toString(16).toUpperCase().padStart(4, '0') + ' ');
+                }
+                hexLines.push(row);
+            }
+            hexEl.textContent = hexLines.join('\n');
+            var scrollT = 0;
+            var hexTicks = 0;
+            var hexInt = setInterval(function() {
+                scrollT += 1;
+                hexEl.scrollTop = scrollT % 80;
+                hexTicks++;
+                if (hexTicks % 3 === 0) {
+                    hackKeySound('soft');
+                }
+            }, 80);
+            await sleep(1600);
+            clearInterval(hexInt);
+
+            for (var p = 0; p <= 100; p += 7) {
+                prog.style.width = p + '%';
+                hackKeySound(p >= 100 ? 'hard' : 'soft');
+                await sleep(45);
+            }
+            prog.style.width = '100%';
+            await typeLine('> EXPLOIT CHAIN COMPLETE — AWAITING PASSWORD…', false);
+            await sleep(200);
+
+            var passwords = [
+                { word: 'WASTELAND', ok: false },
+                { word: 'OVERSEER', ok: true },
+                { word: 'VAULT1848', ok: false },
+                { word: 'ROBCO', ok: false }
+            ];
+            for (var j = passwords.length - 1; j > 0; j--) {
+                var k = Math.floor(Math.random() * (j + 1));
+                var tmp = passwords[j];
+                passwords[j] = passwords[k];
+                passwords[k] = tmp;
+            }
+
+            wordsEl.style.display = 'block';
+            passwords.forEach(function(p) {
+                var sp = document.createElement('span');
+                sp.textContent = p.word;
+                sp.dataset.ok = p.ok ? '1' : '0';
+                sp.onclick = function() { onHackWordClick(sp, passwords, statusEl, wordsEl); };
+                wordsEl.appendChild(sp);
+            });
+            statusEl.textContent = 'SELECT ADMINISTRATOR PASSWORD';
+            hackKeyBurst(4, 45);
+        }
+
+        function onHackWordClick(span, all, statusEl, wordsEl) {
+            if (span.dataset.used === '1') return;
+            hackKeyBurst(2, 35);
+            var ok = span.dataset.ok === '1';
+            if (ok) {
+                hackKeySound('hard');
+                setTimeout(function() { hackKeySound('normal'); }, 60);
+                setTimeout(function() { hackKeySound('hard'); }, 140);
+                span.style.borderColor = '#33ff33';
+                span.style.background = 'rgba(51,255,51,0.2)';
+                statusEl.textContent = 'ACCESS GRANTED — OPENING OVERSEER TERMINAL…';
+                Array.prototype.forEach.call(wordsEl.querySelectorAll('span'), function(s) { s.dataset.used = '1'; s.style.pointerEvents = 'none'; });
+                setTimeout(function() { window.location.href = '/overseer'; }, 1100);
+                return;
+            }
+            hackKeySound('hard');
+            setTimeout(function() { hackKeySound('hard'); }, 50);
+            span.classList.add('denied');
+            _hackWrong++;
+            var fake = Math.floor(Math.random() * 4);
+            statusEl.textContent = 'ENTRY DENIED — LIKENESS = ' + fake + '/8';
+            setTimeout(function() { span.classList.remove('denied'); }, 400);
+            if (_hackWrong >= 3) {
+                hackKeyBurst(6, 40);
+                statusEl.textContent = 'LOCKOUT OVERRIDE… FORCING HANDSHAKE…';
+                Array.prototype.forEach.call(wordsEl.querySelectorAll('span'), function(s) { s.dataset.used = '1'; s.style.pointerEvents = 'none'; });
+                setTimeout(function() { window.location.href = '/overseer'; }, 1400);
+            }
+        }
+
+        var _weatherCache = { t: 0, text: '' };
+        function setStatus(html) {
+            var el = document.getElementById('pub-status');
+            if (el) el.innerHTML = html;
+        }
+        async function fetchWeatherLine() {
+            var zipEl = document.getElementById('weather-zip');
+            var zip = zipEl ? zipEl.value.trim() : '';
+            if (!zip) return 'NUCLEAR WINTER';
+            var now = Date.now();
+            if (_weatherCache.text && now - _weatherCache.t < 600000) {
+                return 'NUCLEAR WINTER: ' + _weatherCache.text.replace(/</g, '&lt;');
+            }
+            try {
+                var wr = await fetch('/api/weather?zip=' + encodeURIComponent(zip));
+                var wj = await wr.json();
+                _weatherCache.t = now;
+                _weatherCache.text = (wj.weather || '').trim() || '(unavailable)';
+                return 'NUCLEAR WINTER: ' + String(_weatherCache.text).replace(/</g, '&lt;');
+            } catch (e) {
+                return 'NUCLEAR WINTER: (weather offline)';
+            }
+        }
+        async function update() {
+            var statusEl = document.getElementById('pub-status');
+            try {
+                var res = await fetch('/api/telemetry');
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                var data = await res.json();
+                if (statusEl) statusEl.classList.remove('pub-status-skeleton');
+                var clock = document.getElementById('clock');
+                if (clock) clock.textContent = data.timestamp || '--:--:--';
+
+                var wx = await fetchWeatherLine();
+                var gnrEl = document.getElementById('gnr-status');
+                if (gnrEl) {
+                    var rs = (data.radio_status || 'UNKNOWN').toString().toUpperCase();
+                    var a = gnrAudioEl();
+                    var playing = a && a.src && !a.paused && !a.ended;
+                    if (playing) {
+                        gnrEl.textContent = 'GNR ON AIR (THIS BROWSER)';
+                    } else if (rs === 'ON' || rs === 'LOCKED') {
+                        gnrEl.textContent = 'GNR STREAM READY — OPEN ☰ AND PRESS PLAY';
+                    } else if (rs === 'OFF') {
+                        gnrEl.textContent = 'GNR OFF — PRESS PLAY TO TUNE';
+                    } else {
+                        gnrEl.textContent = 'GNR: ' + rs;
+                    }
+                }
+                if (data.status === 'scanning') {
+                    setStatus('CONNECTING... (Check UNRAID_IP / network)<br>Last update: ' + (data.timestamp || '--') + '<br><span class="status-ok">PLEASE STAND BY</span><br>' + wx.replace(/^NUCLEAR WINTER/, 'WEATHER: NUCLEAR WINTER'));
+                } else {
+                    var integrity = data.vault_integrity || 'UNKNOWN';
+                    var stream = (data.telemetry_stream || '').replace(/</g, '&lt;');
+                    var streamHtml = stream ? stream.replace(/\|/g, ' &middot; ') : 'STABLE';
+                    if (stream.indexOf('CONN ERR') !== -1) {
+                        setStatus('<span class="status-ok">VAULT LINK: OFFLINE</span><br>RESOURCES: ' + streamHtml + '<br>Last update: ' + (data.timestamp || '--') + '<br>' + wx.replace(/^NUCLEAR WINTER/, 'WEATHER: NUCLEAR WINTER'));
+                    } else {
+                        setStatus('<span class="status-ok">INTEGRITY: ' + (integrity === 'STABLE' ? 'NOMINAL' : integrity) + '</span><br>RESOURCES: ' + streamHtml + '<br>Last update: ' + (data.timestamp || '--') + '<br>' + wx.replace(/^NUCLEAR WINTER/, 'WEATHER: NUCLEAR WINTER'));
+                    }
+                }
+            } catch (e) {
+                if (statusEl) statusEl.classList.remove('pub-status-skeleton');
+                setStatus('<span class="status-stale">VAULT TELEMETRY UNAVAILABLE</span><br><span class="pub-status-detail">NETWORK OR SERVER UNREACHABLE — RETRY SHORTLY. Ticker &amp; portals may be stale.</span>');
+            }
+        }
+        async function loadPortals() {
+            var el = document.getElementById('portals');
+            try {
+                var res = await fetch('/api/portals');
+                var data = await res.json();
+                var list = data.portals || [];
+                if (list.length === 0) {
+                    el.innerHTML = '<p style="color:var(--green-dim); font-size:0.9em;">NO PORTALS CONFIGURED.<br>ADD data/portals.json</p>';
+                } else {
+                    el.innerHTML = list.map(function(p) {
+                        var name = (p.name || 'LINK').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+                        var url = (p.url || '#').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+                        return '<a href="' + url + '" class="portal-link" target="_blank" rel="noopener">&gt;&gt; ' + name + '</a>';
+                    }).join('');
+                }
+            } catch (e) {
+                el.innerHTML = '<p style="color:var(--green-dim);">LINK OFFLINE.</p>';
+            }
+        }
+        function setCitizenLore(text) {
+            var t = '[NEWS] ' + (text || 'NOMINAL...') + '   +++   ';
+            var a = document.getElementById('lore-a');
+            var b = document.getElementById('lore-b');
+            if (a) a.textContent = t;
+            if (b) b.textContent = t;
+        }
+        async function loadLoreTicker() {
+            try {
+                var res = await fetch('/api/lore');
+                var d = await res.json();
+                setCitizenLore(d.lore || 'NOMINAL...');
+            } catch (e) {
+                setCitizenLore('LINK OFFLINE');
+            }
+        }
+        loadPortals();
+        loadLoreTicker();
+        setInterval(update, 5000);
+        update();
+    </script>
+</body>
+</html>

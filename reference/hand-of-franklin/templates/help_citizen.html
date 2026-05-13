@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HELP — CITIZEN TERMINAL</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --green: #39ff14;
+            --green-dim: rgba(57, 255, 20, 0.65);
+            --bg: #031003;
+            --panel: #0a180a;
+            --border: #1a3d1a;
+            --font: 'Share Tech Mono', 'Courier New', monospace;
+        }
+        * { box-sizing: border-box; }
+        body {
+            background: var(--bg);
+            color: var(--green);
+            font-family: var(--font);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        h1 { color: var(--green); border-bottom: 2px solid var(--green); padding-bottom: 10px; }
+        h2 { color: var(--green-dim); margin-top: 30px; border-bottom: 1px solid var(--border); padding-bottom: 5px; }
+        code { background: var(--panel); padding: 2px 6px; border: 1px solid var(--border); }
+        .section { margin: 20px 0; }
+        ul { padding-left: 20px; }
+        li { margin: 8px 0; }
+        a { color: var(--green); }
+        a:hover { text-decoration: underline; }
+        .back-link { display: inline-block; margin: 20px 0; padding: 8px 16px; border: 2px solid var(--green); text-decoration: none; }
+        .back-link:hover { background: var(--green); color: var(--bg); }
+    </style>
+</head>
+<body>
+    <h1>📖 CITIZEN TERMINAL — USER GUIDE</h1>
+    <a href="/" class="back-link">← BACK TO CITIZEN TERMINAL</a>
+
+    <div class="section">
+        <h2>OVERVIEW</h2>
+        <p>The Citizen Terminal provides public access to Vault 1848 services and information. This is the standard interface for all Vault residents.</p>
+    </div>
+
+    <div class="section">
+        <h2>FEATURES</h2>
+        <ul>
+            <li><strong>Portal Links:</strong> Quick access to Vault services (Plex, Radarr, Sonarr, etc.)</li>
+            <li><strong>PIP-BOY NEWS WIRE:</strong> Bottom ticker showing Vault news and lore updates</li>
+            <li><strong>GNR (Galaxy News Radio):</strong> Wasteland radio streaming (via YouTube live URL)</li>
+            <li><strong>Weather:</strong> Current weather for your ZIP code</li>
+            <li><strong>TV/Wall Mode:</strong> Large-type layout for living room displays</li>
+            <li><strong>Overseer Access:</strong> Classified terminal link (requires hack minigame)</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>CONTROLS</h2>
+        <ul>
+            <li><strong>☰ Menu Button (top-right):</strong> Opens settings panel</li>
+            <li><strong>BROADCAST SPEED:</strong> Same slider range as Overseer (240–3600 s, default 1800); Citizen saves its own value in this browser.</li>
+            <li><strong>WEATHER ZIP:</strong> Enter US ZIP code for weather display</li>
+            <li><strong>GNR PLAY/STOP:</strong> Start or stop Galaxy News Radio stream</li>
+            <li><strong>DISK TEMP UNITS:</strong> Celsius / Fahrenheit (used on Overseer storage matrix; preference stored here too)</li>
+            <li><strong>TV / WALL MODE:</strong> Switch to large-type layout</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>GNR — GALAXY NEWS RADIO</h2>
+        <p>GNR streams live audio from a configurable YouTube URL. When you click PLAY:</p>
+        <ol>
+            <li>The server runs yt-dlp to resolve the stream URL (may take 10-60 seconds)</li>
+            <li>The header shows a tuning animation (swirling rings)</li>
+            <li>Once playing, a live level-bar animation appears in the header</li>
+            <li>STOP ends playback in this tab and clears the server-side stream cache</li>
+        </ol>
+        <p><strong>Note:</strong> Each browser tab has its own audio; stop each tab separately.</p>
+    </div>
+
+    <div class="section">
+        <h2>PIP-BOY NEWS WIRE</h2>
+        <p>The bottom chyron shows local time, PIP-BOY branding, and rotating Vault news/lore. Speed matches Overseer (☰ menu). News updates from the Vault data feed.</p>
+    </div>
+
+    <div class="section">
+        <h2>OVERSEER TERMLINK</h2>
+        <p>The "CLASSIFIED: OVERSEER TERMLINK" link in settings triggers a hack minigame. Successfully completing it grants access to the Overseer Command Terminal with full system controls.</p>
+    </div>
+
+    <div class="section">
+        <h2>TV / WALL MODE</h2>
+        <p>Designed for large displays (<code>/tv</code>): larger type, single-column layout, extra bottom padding for the news chyron, scaled GNR tuning/live widget in the header, and a short on-screen hint pointing to the ☰ menu (lore speed, weather, GNR, disk temp units for Overseer).</p>
+    </div>
+
+    <a href="/" class="back-link">← BACK TO CITIZEN TERMINAL</a>
+</body>
+</html>
