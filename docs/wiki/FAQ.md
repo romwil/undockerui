@@ -26,6 +26,10 @@ If you can reach the Unraid web UI and GraphQL through your Connect or VPN path,
 
 The source repo is [romwil/undockerui](https://github.com/romwil/undockerui). Build `plugin/dist/` from `web/` as documented in [Installation](./Installation.md). Formal release archives may be added later on the **Releases** tab.
 
+## How do I enable Unraid’s API and get a key for `npm run dev`?
+
+See **[Unraid API and keys](./Unraid-API-and-keys.md)** — GraphQL sandbox, **Settings → Management Access → API Keys**, and putting the key in **`UNRAID_API_KEY`** in your repo-root `.env`.
+
 ## Next steps
 
 - [Troubleshooting](./Troubleshooting.md)

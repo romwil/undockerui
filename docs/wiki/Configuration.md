@@ -24,6 +24,8 @@ This bakes the override into the static JS. Most Unraid installs do **not** need
 
 ## Local development
 
+**Unraid API keys, GraphQL sandbox, and Management Access:** see the wiki guide **[Unraid API and keys](./Unraid-API-and-keys.md)** (official Unraid docs linked there).
+
 Environment variables are read from a **`.env` file in the repository root** (parent of `web/`), because `web/vite.config.ts` sets `envDir: '..'`.
 
 Copy `.env.example` to `.env` in the **repo root**. Vite loads **`UNRAID_*`** keys in `vite.config.ts` only (not bundled into JS). **`VITE_GRAPHQL_URL`** is optional and only affects **production** builds.
@@ -58,6 +60,7 @@ from repo root (delegates to `web/`) or `cd web && npm run dev`.
 
 - **Docker** must be enabled for the menu item to appear.
 - **User permissions** follow Unraid’s roles: users without Docker rights will see GraphQL permission errors.
+- **API / GraphQL for developers** — Enabling sandbox, API keys, and `x-api-key`: [Unraid API and keys](./Unraid-API-and-keys.md).
 
 ## Next steps
 

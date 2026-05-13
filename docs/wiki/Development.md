@@ -35,7 +35,7 @@ From repo root:
 
 ## Environment
 
-See **[Configuration](./Configuration.md)** for the full `.env` reference (`UNRAID_GRAPHQL`, `UNRAID_WEBGUI`, `UNRAID_API_KEY`, `VITE_GRAPHQL_URL`, etc.).
+See **[Configuration](./Configuration.md)** for the full `.env` reference. For **Unraid Management Access, GraphQL sandbox, and API keys**, see **[Unraid API and keys](./Unraid-API-and-keys.md)**.
 
 ## Tests / CI
 

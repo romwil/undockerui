@@ -18,6 +18,7 @@ Welcome to the **UnDocker** documentation wiki: how the project fits into Unraid
 | Work with Compose files from the browser | [Compose workspace](./Compose-workspace.md) |
 | Use logs windows and container image updates | [Logs and updates](./Logs-and-updates.md) |
 | See how the pieces connect (SPA, GraphQL, PHP) | [Architecture](./Architecture.md) |
+| Obtain Unraid API keys & enable GraphQL | **[Unraid API and keys](./Unraid-API-and-keys.md)** |
 | Tune dev environment or `.env` | [Configuration](./Configuration.md) |
 | Understand trust boundaries and reporting issues | [Security](./Security.md) |
 | Fix common problems | [Troubleshooting](./Troubleshooting.md) |
@@ -33,8 +34,7 @@ Welcome to the **UnDocker** documentation wiki: how the project fits into Unraid
 - **PHP only for Compose file I/O** — Reading/writing YAML and running `docker compose up -d` use a small `compose_api.php` endpoint with strict path rules and CSRF, because those operations are not exposed the same way through GraphQL in typical setups.
 - **Iframe on purpose** — The plugin page loads the SPA in an iframe so the bundle can live under `/plugins/undockerui/dist/` while still inheriting cookies and same-origin access to `/graphql` and the compose API.
 - **Icons from Docker labels** — When GraphQL does not return `iconUrl`, UnDocker reads `net.unraid.docker.icon` / `org.unraid.docker.icon` from container labels (same source as Unraid’s Docker client).
-
----
+- **Unraid API keys are for dev / automation** — The plugin on the NAS uses your normal login session. API keys and **Settings → Management Access** options matter when you develop from another machine; see [Unraid API and keys](./Unraid-API-and-keys.md).
 
 ## Publishing this wiki on GitHub
 
