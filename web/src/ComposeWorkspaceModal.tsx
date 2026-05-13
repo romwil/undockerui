@@ -44,8 +44,25 @@ function browseCanGoUp(abs: string): boolean {
 }
 
 export default function ComposeWorkspaceModal({ open, onClose, initialPath, onApplied }: Props) {
+  if (!open) return null
+  return (
+    <ComposeWorkspaceModalBody
+      onClose={onClose}
+      initialPath={initialPath}
+      onApplied={onApplied}
+    />
+  )
+}
+
+type BodyProps = {
+  onClose: () => void
+  initialPath?: string
+  onApplied?: () => void
+}
+
+function ComposeWorkspaceModalBody({ onClose, initialPath, onApplied }: BodyProps) {
   const pathInputRef = useRef<HTMLInputElement>(null)
-  const [path, setPath] = useState('')
+  const [path, setPath] = useState(() => initialPath?.trim() ?? '')
   const [yaml, setYaml] = useState(DEFAULT_YAML)
   const [busy, setBusy] = useState(false)
   const [log, setLog] = useState('')
@@ -58,27 +75,12 @@ export default function ComposeWorkspaceModal({ open, onClose, initialPath, onAp
   const [browseErr, setBrowseErr] = useState<string | null>(null)
 
   useEffect(() => {
-    if (!open) return
-    setErr(null)
-    setLog('')
-    setBrowseOpen(false)
-    setBrowseErr(null)
-    if (initialPath?.trim()) {
-      setPath(initialPath.trim())
-    } else {
-      setPath('')
-      setYaml(DEFAULT_YAML)
-    }
-  }, [open, initialPath])
-
-  useEffect(() => {
-    if (!open) return
     function onKey(e: KeyboardEvent) {
       if (e.key === 'Escape') onClose()
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [open, onClose])
+  }, [onClose])
 
   async function refreshBrowse(dir: string) {
     setBrowseBusy(true)
@@ -203,8 +205,6 @@ export default function ComposeWorkspaceModal({ open, onClose, initialPath, onAp
       setBusy(false)
     }
   }
-
-  if (!open) return null
 
   return (
     <div

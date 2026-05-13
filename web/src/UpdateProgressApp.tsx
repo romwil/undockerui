@@ -61,7 +61,6 @@ export default function UpdateProgressApp() {
         ? new BroadcastChannel(UPDATE_PROGRESS_BROADCAST)
         : null
 
-    let intervalId: ReturnType<typeof setInterval> | undefined
     let alive = true
 
     const push = (line: string) => {
@@ -183,7 +182,7 @@ export default function UpdateProgressApp() {
     }
 
     void poll()
-    intervalId = window.setInterval(() => void poll(), 1500)
+    const intervalId = window.setInterval(() => void poll(), 1500)
 
     void (async () => {
       try {

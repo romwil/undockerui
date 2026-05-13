@@ -64,15 +64,25 @@ function FallbackDockerGlyph({ className }: { className?: string }) {
 }
 
 /** Unraid template icon: image URL/path, Font Awesome, or stock `icon-*` glyph. */
+function SafeTemplateImg({ src }: { src: string }) {
+  const [failed, setFailed] = useState(false)
+  if (failed) {
+    return <FallbackDockerGlyph className="h-4 w-4 shrink-0 text-sky-500/90" />
+  }
+  return (
+    <img
+      src={src}
+      alt=""
+      className="h-4 w-4 shrink-0 rounded-sm object-contain opacity-95"
+      onError={() => setFailed(true)}
+    />
+  )
+}
+
 function ContainerTemplateIcon({ c }: { c: DockerContainerRow }) {
   const raw = pickTemplateIconSource(c)?.trim() ?? ''
-  const [imgFailed, setImgFailed] = useState(false)
 
-  useEffect(() => {
-    setImgFailed(false)
-  }, [raw])
-
-  if (!raw || imgFailed) {
+  if (!raw) {
     return <FallbackDockerGlyph className="h-4 w-4 shrink-0 text-sky-500/90" />
   }
 
@@ -90,14 +100,7 @@ function ContainerTemplateIcon({ c }: { c: DockerContainerRow }) {
     return <FallbackDockerGlyph className="h-4 w-4 shrink-0 text-sky-500/90" />
   }
 
-  return (
-    <img
-      src={src}
-      alt=""
-      className="h-4 w-4 shrink-0 rounded-sm object-contain opacity-95"
-      onError={() => setImgFailed(true)}
-    />
-  )
+  return <SafeTemplateImg key={src} src={src} />
 }
 
 function filterContainers(

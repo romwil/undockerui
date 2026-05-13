@@ -1,3 +1,15 @@
 .env
+.env.*
+!.env.example
 web/node_modules
 plugin/dist
+
+# Local scratch / user exports (not part of the plugin)
+plex.txt
+*.local
+
+# Third-party reference trees (keep docs/graphql-schema.snapshot.graphql only)
+reference/
+
+.DS_Store
+Thumbs.db

@@ -1,0 +1,21 @@
+{
+  "name": "undockerui",
+  "private": true,
+  "version": "1.0.0",
+  "description": "UnDocker — a modern Docker containers UI for Unraid (plugin + React SPA).",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/romwil/undockerui.git"
+  },
+  "bugs": {
+    "url": "https://github.com/romwil/undockerui/issues"
+  },
+  "homepage": "https://github.com/romwil/undockerui#readme",
+  "scripts": {
+    "dev": "npm run dev --prefix web",
+    "build": "npm run build --prefix web",
+    "lint": "npm run lint --prefix web",
+    "preview": "npm run preview --prefix web"
+  }
+}
