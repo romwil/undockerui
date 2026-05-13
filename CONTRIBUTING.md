@@ -23,4 +23,4 @@ If you find a vulnerability, please **do not** open a public issue with exploit 
 
 ## Reference material
 
-Historical GraphQL exploration may live in a local `reference/` folder; it is **gitignored**. The repo keeps a single snapshot at [docs/graphql-schema.snapshot.graphql](docs/graphql-schema.snapshot.graphql) for documentation only—verify behavior against your Unraid version. User-facing documentation also lives in the **[docs/wiki](docs/wiki/README.md)**.
+Historical GraphQL exploration may live in a local `reference/` folder; it is **gitignored**. The repo keeps a single snapshot at [docs/graphql-schema.snapshot.graphql](docs/graphql-schema.snapshot.graphql) for documentation only—verify behavior against your Unraid version. User-facing documentation also lives in the **[GitHub Wiki](https://github.com/romwil/undockerui/wiki)**.

@@ -36,7 +36,7 @@ From `web/`, the same scripts exist directly.
 
 Copy **`.env.example`** to **`.env`** in the **repository root** (parent of `web/`). `web/vite.config.ts` sets `envDir: '..'` so Vite reads that file when you run `npm run dev` / `npm run build` from `web/`.
 
-**Enable Unraid’s GraphQL API, create API keys, and use Management Access:** step-by-step guide in the wiki — **[Unraid API and keys](../wiki/Unraid-API-and-keys.md)** (includes links to official Unraid documentation).
+**Enable Unraid’s GraphQL API, create API keys, and use Management Access:** step-by-step guide in the wiki — **[Unraid API and keys](https://github.com/romwil/undockerui/wiki/Unraid-API-and-keys)** (includes links to official Unraid documentation).
 
 ### `UNRAID_*` (vite config only — not bundled into the SPA)
 

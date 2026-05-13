@@ -58,7 +58,7 @@ A **Docker-focused web UI for [Unraid](https://unraid.net/)** that runs as an em
 
 3. Reload the Unraid web UI. Under **Main** (or your menu layout), open **UnDocker** when Docker is enabled.
 
-Full paths, permissions, and troubleshooting: **[docs/INSTALLATION.md](docs/INSTALLATION.md)** — or the **[wiki Installation chapter](docs/wiki/Installation.md)** for the expanded guide.
+Full paths, permissions, and troubleshooting: **[docs/INSTALLATION.md](docs/INSTALLATION.md)** — or the **[wiki Installation chapter](https://github.com/romwil/undockerui/wiki/Installation)** for the expanded guide.
 
 ---
 
@@ -81,8 +81,8 @@ Details: **[docs/DEVELOPMENT.md](docs/DEVELOPMENT.md)**.
 
 | Doc | Purpose |
 |-----|---------|
-| **[docs/wiki](docs/wiki/README.md)** | **Full wiki** — overview, requirements, install, first run, UI, compose, logs/updates, architecture, configuration, security, troubleshooting, development, FAQ |
-| **[docs/wiki/Unraid-API-and-keys.md](docs/wiki/Unraid-API-and-keys.md)** | **Unraid:** enable GraphQL, Management Access, create API keys, use with `npm run dev` |
+| **[GitHub Wiki](https://github.com/romwil/undockerui/wiki)** | **Full wiki** — overview, requirements, install, first run, UI, compose, logs/updates, architecture, configuration, security, troubleshooting, development, FAQ |
+| **[Unraid API and keys](https://github.com/romwil/undockerui/wiki/Unraid-API-and-keys)** | **Unraid:** enable GraphQL, Management Access, create API keys, use with `npm run dev` |
 | [docs/INSTALLATION.md](docs/INSTALLATION.md) | Short install reference (see wiki for depth) |
 | [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) | Vite, env vars, GraphQL proxy, compose API |
 | [docs/SECURITY.md](docs/SECURITY.md) | Threat model, CSRF, path rules, hardening notes |
